@@ -339,28 +339,38 @@
     <script>
         const audio = document.getElementById('spotify-audio');
         const playToggleBtn = document.getElementById('play-toggle');
-        let audioIniciado = false;
 
-        function ativarAudio() {
-            if (!audioIniciado) {
-                audio.play().then(() => {
-                    playToggleBtn.innerHTML = '❚❚';
-                    audioIniciado = true;
-                }).catch(err => console.log("Aguardando clique real..."));
-            }
+        // Função para dar Play e mudar o ícone
+        function tocarAudio() {
+            audio.play().then(() => {
+                playToggleBtn.innerHTML = '❚❚';
+            }).catch(err => console.log("Aguardando clique real..."));
         }
 
-        document.body.addEventListener('click', ativarAudio);
+        // Função para dar Pause e mudar o ícone
+        function pausarAudio() {
+            audio.pause();
+            playToggleBtn.innerHTML = '▶';
+        }
 
-        playToggleBtn.addEventListener('click', function(e) {
-            e.stopPropagation(); 
+        // 1. Clique no fundo da página (só roda UMA vez para ativar o áudio)
+        document.body.addEventListener('click', function cliqueFundo() {
             if (audio.paused) {
-                audio.play();
-                playToggleBtn.innerHTML = '❚❚';
-                audioIniciado = true;
+                tocarAudio();
+            }
+            // Remove o evento do body para não duplicar nos próximos cliques
+            document.body.removeEventListener('click', cliqueFundo);
+        });
+
+        // 2. Clique direto no botão de Play/Pause
+        playToggleBtn.addEventListener('click', function(e) {
+            // Impede que o clique no botão ative o clique do fundo junto
+            e.stopPropagation(); 
+            
+            if (audio.paused) {
+                tocarAudio();
             } else {
-                audio.pause();
-                playToggleBtn.innerHTML = '▶';
+                pausarAudio();
             }
         });
     </script>
