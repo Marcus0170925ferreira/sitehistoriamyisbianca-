@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spotify: Nosso Início: 18 de Janeiro de 2026</title>
+    <title>Spotify: História do Meu Amor</title>
     <style>
         * {
             margin: 0;
@@ -12,13 +12,56 @@
             font-family: 'Montserrat', 'Segoe UI', Helvetica, Arial, sans-serif;
         }
         body {
-            background: linear-gradient(to bottom, #222222 0%, #121212 100%);
+            /* Fundo Aurora Boreal: Do preto profundo ao verde Spotify sutil */
+            background: linear-gradient(180deg, #121212 0%, #0c2012 60%, #1db954 100%);
             background-attachment: fixed;
             color: #ffffff;
             padding-bottom: 110px;
             overflow-x: hidden;
             cursor: pointer;
+            position: relative;
+            min-height: 100vh;
         }
+
+        /* Container dos corações flutuantes */
+        #hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            color: #1ed760;
+            font-size: 20px;
+            opacity: 0;
+            animation: floatUp 6s ease-in infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0.5);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* Conteúdo do site acima dos corações */
+        .main-content {
+            position: relative;
+            z-index: 2;
+        }
+
         .spotify-header {
             display: flex;
             justify-content: space-between;
@@ -35,16 +78,17 @@
             font-weight: 700;
         }
         .profile-avatar {
-            width: 28px;
-            height: 28px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             background-color: #1ed760;
             color: #000;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: bold;
+            border: 1px solid #fff;
         }
         .playlist-info {
             padding: 10px 20px 30px 20px;
@@ -62,12 +106,17 @@
             font-weight: 800;
             letter-spacing: -1px;
             margin-bottom: 15px;
+            background: linear-gradient(45deg, #fff, #1ed760);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         .story-section {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.4);
             margin: 0 20px 30px 20px;
             padding: 20px;
             border-radius: 8px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
         .story-title {
             font-size: 1.1rem;
@@ -95,7 +144,7 @@
             width: 110px;
             height: 110px;
             border-radius: 50%;
-            object-fit: cover;
+            object-fit: cover; /* Mantido cover aqui pois avatares redondos precisam preencher o círculo */
             box-shadow: 0 8px 16px rgba(0,0,0,0.5);
             border: 2px solid #1ed760;
         }
@@ -121,18 +170,23 @@
             .grid-media { grid-template-columns: repeat(3, 1fr); }
         }
         .album-card {
-            background: #181818;
+            background: rgba(24, 24, 24, 0.65);
             padding: 12px;
             border-radius: 6px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
+        
+        /* ALTERAÇÃO DE QUALIDADE AQUI */
         .album-cover {
             width: 100%;
             aspect-ratio: 1 / 1;
-            object-fit: cover;
+            object-fit: contain; /* Impede a imagem de esticar ou cortar */
+            background-color: #121212; /* Fundo escuro para preencher espaços vazios */
             border-radius: 4px;
             margin-bottom: 10px;
         }
+        
         .album-title {
             font-size: 0.85rem;
             font-weight: 700;
@@ -142,9 +196,10 @@
         }
         .video-player-container {
             margin: 0 20px 40px 20px;
-            background: #181818;
+            background: rgba(24, 24, 24, 0.65);
             border-radius: 8px;
             padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
         .video-header-info {
             display: flex;
@@ -202,7 +257,7 @@
             border: none;
             cursor: pointer;
         }
-        .spotify-footer { text-align: center; font-size: 0.7rem; color: #535353; padding: 10px 0; }
+        .spotify-footer { text-align: center; font-size: 0.7rem; color: #838383; padding: 10px 0; }
         
         .audio-tip {
             text-align: center;
@@ -223,98 +278,102 @@
 </head>
 <body>
 
-    <div class="spotify-header">
-        <span>←</span>
-        <div class="profile-area">
-            <div class="profile-avatar">B</div>
-            <span>Bianca</span>
-        </div>
-        <span>🔍</span>
-    </div>
+    <div id="hearts-container"></div>
 
-    <div class="playlist-info">
-        <p class="playlist-type">Playlist Privada</p>
-        <h2 class="playlist-title">Nosso Início: 18 de Janeiro de 2026</h2>
-        <div class="audio-tip">✨ Dica: Dê um clique em qualquer lugar da tela para ativar a música!</div>
-    </div>
+    <div class="main-content">
+        <div class="spotify-header">
+            <span>←</span>
+            <div class="profile-area">
+                <div class="profile-avatar">MB</div>
+                <span>Para o meu amor, Bianca</span>
+            </div>
+            <span>🔍</span>
+        </div>
 
-    <div class="story-section">
-        <h3 class="story-title">Um Amor Escrito nas Estrelas (e pela Sogra!) <span class="spotify-star">✦</span></h3>
-        <p class="story-desc">Por 9 anos, a mãe da Bianca sempre quis que ficássemos juntos. Finalmente, o destino concordou.</p>
-        
-        <div class="circle-row">
-            <div class="circle-card"><img src="https://i.ibb.co/MxntHCLZ/image.jpg" class="circle-img"></div>
-            <div class="circle-card"><img src="https://i.ibb.co/Fbwxhzy4/image.jpg" class="circle-img"></div>
-            <div class="circle-card"><img src="https://i.ibb.co/5X5vnHXS/image.jpg" class="circle-img"></div>
+        <div class="playlist-info">
+            <p class="playlist-type">Playlist Privada</p>
+            <h2 class="playlist-title">Playlist História do Meu Amor</h2>
+            <div class="audio-tip">✨ Dica: Dê um clique em qualquer lugar da tela para ativar a música!</div>
         </div>
-    </div>
 
-    <h3 class="section-heading">Nossos Momentos</h3>
-    <p class="section-subheading">Fotos oficiais da nossa história carregadas direto da nuvem.</p>
+        <div class="story-section">
+            <h3 class="story-title">Um Amor Escrito nas Estrelas (e pela Sogra!) <span class="spotify-star">✦</span></h3>
+            <p class="story-desc">Por 9 anos, a mãe da Bianca sempre quis que ficássemos juntos. Finalmente, o destino concordou.</p>
+            
+            <div class="circle-row">
+                <div class="circle-card"><img src="https://i.ibb.co/MxntHCLZ/image.jpg" class="circle-img"></div>
+                <div class="circle-card"><img src="https://i.ibb.co/Fbwxhzy4/image.jpg" class="circle-img"></div>
+                <div class="circle-card"><img src="https://i.ibb.co/5X5vnHXS/image.jpg" class="circle-img"></div>
+            </div>
+        </div>
 
-    <div class="grid-media">
-        <div class="album-card">
-            <img src="https://i.ibb.co/p6tWnhdp/image.jpg" class="album-cover">
-            <p class="album-title">Com Você Sempre</p>
-        </div>
-        <div class="album-card">
-            <img src="https://i.ibb.co/3yrv7NxX/image.jpg" class="album-cover">
-            <p class="album-title">Sorriso Lindo</p>
-        </div>
-        <div class="album-card">
-            <img src="https://i.ibb.co/VWCTGQ75/image.jpg" class="album-cover">
-            <p class="album-title">Conexão Perfeita</p>
-        </div>
-        <div class="album-card">
-            <img src="https://i.ibb.co/5X5vnHXS/image.jpg" class="album-cover">
-            <p class="album-title">Amor da Minha Vida</p>
-        </div>
-        <div class="album-card">
-            <img src="https://i.ibb.co/CKYsb9S3/image.jpg" class="album-cover">
-            <p class="album-title">Momento Especial</p>
-        </div>
-        <div class="album-card">
-            <img src="https://i.ibb.co/Z6znH1Yq/image.jpg" class="album-cover">
-            <p class="album-title">Nosso Porto Seguro</p>
-        </div>
-        <div class="album-card">
-            <img src="https://i.ibb.co/VYHYmFG8/image.jpg" class="album-cover">
-            <p class="album-title">Parceria Pura</p>
-        </div>
-        <div class="album-card">
-            <img src="https://i.ibb.co/mr7PCGFc/image.jpg" class="album-cover">
-            <p class="album-title">Felicidade</p>
-        </div>
-        <div class="album-card">
-            <img src="https://i.ibb.co/BHdLy406/image.jpg" class="album-cover">
-            <p class="album-title">Aventuras Juntos</p>
-        </div>
-        <div class="album-card">
-            <img src="https://i.ibb.co/sp5fxQ0C/image.jpg" class="album-cover">
-            <p class="album-title">Para Sempre</p>
-        </div>
-        <div class="album-card">
-            <img src="https://i.ibb.co/7N8wR7c0/image.jpg" class="album-cover">
-            <p class="album-title">Nossa História</p>
-        </div>
-        <div class="album-card">
-            <img src="https://i.ibb.co/WNBZF2N0/image.jpg" class="album-cover">
-            <p class="album-title">Meu Lugar Favorito</p>
-        </div>
-    </div>
+        <h3 class="section-heading">Nossos Momentos</h3>
+        <p class="section-subheading">Fotos oficiais da nossa história carregadas direto da nuvem.</p>
 
-    <div class="video-player-container">
-        <div class="video-header-info">
-            <span class="video-title">Pé na Estrada 🏍️</span>
-            <span class="spotify-icon-green">🟢 Vídeo Online</span>
+        <div class="grid-media">
+            <div class="album-card">
+                <img src="https://i.ibb.co/p6tWnhdp/image.jpg" class="album-cover">
+                <p class="album-title">Com Você Sempre</p>
+            </div>
+            <div class="album-card">
+                <img src="https://i.ibb.co/3yrv7NxX/image.jpg" class="album-cover">
+                <p class="album-title">Sorriso Lindo</p>
+            </div>
+            <div class="album-card">
+                <img src="https://i.ibb.co/VWCTGQ75/image.jpg" class="album-cover">
+                <p class="album-title">Conexão Perfeita</p>
+            </div>
+            <div class="album-card">
+                <img src="https://i.ibb.co/5X5vnHXS/image.jpg" class="album-cover">
+                <p class="album-title">Amor da Minha Vida</p>
+            </div>
+            <div class="album-card">
+                <img src="https://i.ibb.co/CKYsb9S3/image.jpg" class="album-cover">
+                <p class="album-title">Momento Especial</p>
+            </div>
+            <div class="album-card">
+                <img src="https://i.ibb.co/Z6znH1Yq/image.jpg" class="album-cover">
+                <p class="album-title">Nosso Porto Seguro</p>
+            </div>
+            <div class="album-card">
+                <img src="https://i.ibb.co/VYHYmFG8/image.jpg" class="album-cover">
+                <p class="album-title">Parceria Pura</p>
+            </div>
+            <div class="album-card">
+                <img src="https://i.ibb.co/mr7PCGFc/image.jpg" class="album-cover">
+                <p class="album-title">Felicidade</p>
+            </div>
+            <div class="album-card">
+                <img src="https://i.ibb.co/BHdLy406/image.jpg" class="album-cover">
+                <p class="album-title">Aventuras Juntos</p>
+            </div>
+            <div class="album-card">
+                <img src="https://i.ibb.co/sp5fxQ0C/image.jpg" class="album-cover">
+                <p class="album-title">Para Sempre</p>
+            </div>
+            <div class="album-card">
+                <img src="https://i.ibb.co/7N8wR7c0/image.jpg" class="album-cover">
+                <p class="album-title">Nossa História</p>
+            </div>
+            <div class="album-card">
+                <img src="https://i.ibb.co/WNBZF2N0/image.jpg" class="album-cover">
+                <p class="album-title">Meu Lugar Favorito</p>
+            </div>
         </div>
-        <div class="video-box">
-            <iframe src="https://streamable.com/e/y9cmm7?autoplay=1&nocontrols=1" allow="autoplay" allowfullscreen></iframe>
-        </div>
-    </div>
 
-    <div class="spotify-footer">
-        Bianca & Você | Desde 18/01/2026 | Feito com Amor
+        <div class="video-player-container">
+            <div class="video-header-info">
+                <span class="video-title">Pé na Estrada 🏍️</span>
+                <span class="spotify-icon-green">🟢 Vídeo Online</span>
+            </div>
+            <div class="video-box">
+                <iframe src="https://streamable.com/e/y9cmm7?autoplay=1&nocontrols=1" allow="autoplay" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div class="spotify-footer">
+            Bianca & Marcos | Desde 18/01/2026 | Feito com Amor
+        </div>
     </div>
 
     <div class="now-playing-bar">
@@ -340,33 +399,48 @@
         const audio = document.getElementById('spotify-audio');
         const playToggleBtn = document.getElementById('play-toggle');
 
-        // Função para dar Play e mudar o ícone
+        function createHeart() {
+            const container = document.getElementById('hearts-container');
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            
+            const size = Math.random() * 12 + 10;
+            heart.style.fontSize = size + 'px';
+            
+            heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+            
+            container.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 7000);
+        }
+
+        setInterval(createHeart, 2000);
+
         function tocarAudio() {
             audio.play().then(() => {
                 playToggleBtn.innerHTML = '❚❚';
             }).catch(err => console.log("Aguardando clique real..."));
         }
 
-        // Função para dar Pause e mudar o ícone
         function pausarAudio() {
             audio.pause();
             playToggleBtn.innerHTML = '▶';
         }
 
-        // 1. Clique no fundo da página (só roda UMA vez para ativar o áudio)
         document.body.addEventListener('click', function cliqueFundo() {
             if (audio.paused) {
                 tocarAudio();
             }
-            // Remove o evento do body para não duplicar nos próximos cliques
             document.body.removeEventListener('click', cliqueFundo);
         });
 
-        // 2. Clique direto no botão de Play/Pause
         playToggleBtn.addEventListener('click', function(e) {
-            // Impede que o clique no botão ative o clique do fundo junto
             e.stopPropagation(); 
-            
             if (audio.paused) {
                 tocarAudio();
             } else {
