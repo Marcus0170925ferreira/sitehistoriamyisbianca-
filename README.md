@@ -1,0 +1,1 @@
+Este é um projeto de site focado em contar a história de 'Amayus Bianca'. Ele inclui uma página inicial e um arquivo de áudio em MP3 da Marina Sena, compondo uma experiência sonora e visual imersiva. Este repositório tem o objetivo de servir de base para colaboração e configuração com outros desenvolvedores.
