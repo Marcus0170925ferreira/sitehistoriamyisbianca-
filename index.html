@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spotify: M & B</title>
+    <meta name="description" content="Nossa trilha sonora oficial — Bianca & Marcos.">
+    <meta property="og:title" content="Spotify: M & B">
+    <meta property="og:description" content="Nossa trilha sonora oficial — Bianca & Marcos.">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -32,7 +36,11 @@
             cursor: pointer;
             transition: transform 0.3s ease;
             animation: bounce 2s infinite;
+            border: none;
+            background: transparent;
+            color: inherit;
         }
+        .gift-box:focus { outline: 3px solid #1ed760; border-radius: 8px; }
         .gift-box:hover {
             transform: scale(1.15);
         }
@@ -95,6 +103,11 @@
             min-height: 100vh;
         }
 
+        /* Respect user preference for reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            * { animation: none !important; transition: none !important; }
+        }
+
         /* Corações flutuantes bem sutis e poucos */
         #hearts-container {
             position: fixed;
@@ -110,7 +123,8 @@
             color: rgba(30, 215, 96, 0.4);
             font-size: 18px;
             opacity: 0;
-            animation: floatUp 7s ease-in infinite;
+            animation: floatUp 7s ease-in forwards;
+            will-change: transform, opacity;
         }
         @keyframes floatUp {
             0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
@@ -291,122 +305,203 @@
 </head>
 <body>
 
-    <div id="gift-overlay">
-        <div id="gift-closed" class="gift-box" onclick="abrirPresente()">🎁</div>
+    <div id="gift-overlay" role="dialog" aria-modal="true" aria-labelledby="gift-heading">
+        <button id="gift-closed" class="gift-box" type="button" aria-label="Abrir presente">🎁</button>
         <div id="gift-text-prompt" class="gift-text">Você recebeu um presente. Toque para abrir!</div>
         
-        <div id="gift-opened" class="letter-content">
-            <h1 class="letter-message">Minha amarelinha 💛</h1>
-            <button class="btn-open-site" onclick="entrarNoSite()">Entrar no Espaço M & B</button>
+        <div id="gift-opened" class="letter-content" aria-hidden="true">
+            <h1 id="gift-heading" class="letter-message">Minha amarelinha 💛</h1>
+            <button class="btn-open-site" type="button">Entrar no Espaço M &amp; B</button>
         </div>
     </div>
 
-    <div id="hearts-container"></div>
+    <div id="hearts-container" aria-hidden="true"></div>
 
-    <div class="main-content">
-        <div class="spotify-header">
-            <span>←</span>
+    <main class="main-content" id="main-content">
+        <header class="spotify-header" role="banner">
+            <span aria-hidden="true">←</span>
             <div class="profile-area">
-                <div class="profile-avatar">MB</div>
+                <div class="profile-avatar" aria-hidden="true">MB</div>
                 <span>Para o meu amor, Bianca</span>
             </div>
-            <span>🔍</span>
-        </div>
+            <span aria-hidden="true">🔍</span>
+        </header>
 
-        <div class="cover-header">
-            <h2 class="initials-title">M<span>&</span>B</h2>
+        <section class="cover-header" aria-label="Capa">
+            <h2 class="initials-title">M<span>&amp;</span>B</h2>
             <p class="sub-cover-text">Nossa Trilha Sonora Oficial</p>
-        </div>
+        </section>
 
-        <div class="story-section">
-            <h3 class="story-title">Um Amor Escrito nas Estrelas ✨</h3>
+        <section class="story-section" aria-labelledby="story-title">
+            <h3 id="story-title" class="story-title">Um Amor Escrito nas Estrelas ✨</h3>
             <p class="story-desc">Por 9 anos, a mãe da Bianca sempre quis que ficássemos juntos. Finalmente, o destino concordou.</p>
             
             <div class="circle-row">
-                <div class="circle-card"><img src="https://i.ibb.co/MxntHCLZ/image.jpg" class="circle-img"></div>
-                <div class="circle-card"><img src="https://i.ibb.co/Fbwxhzy4/image.jpg" class="circle-img"></div>
-                <div class="circle-card"><img src="https://i.ibb.co/5X5vnHXS/image.jpg" class="circle-img"></div>
+                <div class="circle-card"><img src="https://i.ibb.co/MxntHCLZ/image.jpg" alt="Foto do casal - momento 1" class="circle-img" loading="lazy" width="110" height="110"></div>
+                <div class="circle-card"><img src="https://i.ibb.co/Fbwxhzy4/image.jpg" alt="Foto do casal - momento 2" class="circle-img" loading="lazy" width="110" height="110"></div>
+                <div class="circle-card"><img src="https://i.ibb.co/5X5vnHXS/image.jpg" alt="Foto do casal - momento 3" class="circle-img" loading="lazy" width="110" height="110"></div>
             </div>
-        </div>
+        </section>
 
         <h3 class="section-heading">Nossos Momentos</h3>
         <p class="section-subheading">Fotos oficiais da nossa história carregadas direto da nuvem.</p>
 
         <div class="grid-media">
-            <div class="album-card"><img src="https://i.ibb.co/p6tWnhdp/image.jpg" class="album-cover"><p class="album-title">Com Você Sempre</p></div>
-            <div class="album-card"><img src="https://i.ibb.co/3yrv7NxX/image.jpg" class="album-cover"><p class="album-title">Sorriso Lindo</p></div>
-            <div class="album-card"><img src="https://i.ibb.co/VWCTGQ75/image.jpg" class="album-cover"><p class="album-title">Conexão Perfeita</p></div>
-            <div class="album-card"><img src="https://i.ibb.co/5X5vnHXS/image.jpg" class="album-cover"><p class="album-title">Amor da Minha Vida</p></div>
-            <div class="album-card"><img src="https://i.ibb.co/CKYsb9S3/image.jpg" class="album-cover"><p class="album-title">Momento Especial</p></div>
-            <div class="album-card"><img src="https://i.ibb.co/Z6znH1Yq/image.jpg" class="album-cover"><p class="album-title">Nosso Porto Seguro</p></div>
-            <div class="album-card"><img src="https://i.ibb.co/VYHYmFG8/image.jpg" class="album-cover"><p class="album-title">Parceria Pura</p></div>
-            <div class="album-card"><img src="https://i.ibb.co/mr7PCGFc/image.jpg" class="album-cover"><p class="album-title">Felicidade</p></div>
-            <div class="album-card"><img src="https://i.ibb.co/BHdLy406/image.jpg" class="album-cover"><p class="album-title">Aventuras Juntos</p></div>
-            <div class="album-card"><img src="https://i.ibb.co/sp5fxQ0C/image.jpg" class="album-cover"><p class="album-title">Para Sempre</p></div>
-            <div class="album-card"><img src="https://i.ibb.co/7N8wR7c0/image.jpg" class="album-cover"><p class="album-title">Nossa História</p></div>
-            <div class="album-card"><img src="https://i.ibb.co/WNBZF2N0/image.jpg" class="album-cover"><p class="album-title">Meu Lugar Favorito</p></div>
+            <div class="album-card"><img src="https://i.ibb.co/p6tWnhdp/image.jpg" class="album-cover" alt="Com Você Sempre" loading="lazy"><p class="album-title">Com Você Sempre</p></div>
+            <div class="album-card"><img src="https://i.ibb.co/3yrv7NxX/image.jpg" class="album-cover" alt="Sorriso Lindo" loading="lazy"><p class="album-title">Sorriso Lindo</p></div>
+            <div class="album-card"><img src="https://i.ibb.co/VWCTGQ75/image.jpg" class="album-cover" alt="Conexão Perfeita" loading="lazy"><p class="album-title">Conexão Perfeita</p></div>
+            <div class="album-card"><img src="https://i.ibb.co/5X5vnHXS/image.jpg" class="album-cover" alt="Amor da Minha Vida" loading="lazy"><p class="album-title">Amor da Minha Vida</p></div>
+            <div class="album-card"><img src="https://i.ibb.co/CKYsb9S3/image.jpg" class="album-cover" alt="Momento Especial" loading="lazy"><p class="album-title">Momento Especial</p></div>
+            <div class="album-card"><img src="https://i.ibb.co/Z6znH1Yq/image.jpg" class="album-cover" alt="Nosso Porto Seguro" loading="lazy"><p class="album-title">Nosso Porto Seguro</p></div>
+            <div class="album-card"><img src="https://i.ibb.co/VYHYmFG8/image.jpg" class="album-cover" alt="Parceria Pura" loading="lazy"><p class="album-title">Parceria Pura</p></div>
+            <div class="album-card"><img src="https://i.ibb.co/mr7PCGFc/image.jpg" class="album-cover" alt="Felicidade" loading="lazy"><p class="album-title">Felicidade</p></div>
+            <div class="album-card"><img src="https://i.ibb.co/BHdLy406/image.jpg" class="album-cover" alt="Aventuras Juntos" loading="lazy"><p class="album-title">Aventuras Juntos</p></div>
+            <div class="album-card"><img src="https://i.ibb.co/sp5fxQ0C/image.jpg" class="album-cover" alt="Para Sempre" loading="lazy"><p class="album-title">Para Sempre</p></div>
+            <div class="album-card"><img src="https://i.ibb.co/7N8wR7c0/image.jpg" class="album-cover" alt="Nossa História" loading="lazy"><p class="album-title">Nossa História</p></div>
+            <div class="album-card"><img src="https://i.ibb.co/WNBZF2N0/image.jpg" class="album-cover" alt="Meu Lugar Favorito" loading="lazy"><p class="album-title">Meu Lugar Favorito</p></div>
         </div>
 
         <div class="video-player-container">
             <div class="video-box">
-                <iframe src="https://streamable.com/e/y9cmm7?autoplay=1&nocontrols=1" allow="autoplay" allowfullscreen></iframe>
+                <iframe src="https://streamable.com/e/y9cmm7?autoplay=1&nocontrols=1" title="Vídeo especial" allow="autoplay; fullscreen" loading="lazy"></iframe>
             </div>
         </div>
 
         <div class="spotify-footer">
             Bianca & Marcos | Desde 18/01/2026 | Feito com Amor
         </div>
-    </div>
+    </main>
 
-    <div class="spotify-fixed-player">
+    <div class="spotify-fixed-player" aria-hidden="false">
         <div class="player-wrapper">
-            <iframe id="spotify-audio" data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/album/2PRDU8Oeb9f0lpgSjbaJXE?utm_source=generator&si=862901f7a7b746de" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            <iframe id="spotify-audio" title="Spotify embed" style="border-radius:12px" src="https://open.spotify.com/embed/album/2PRDU8Oeb9f0lpgSjbaJXE?si=862901f7a7b746de" allow="autoplay; encrypted-media; clipboard-write" loading="lazy"></iframe>
         </div>
     </div>
 
     <script>
-        // Lógica da Carta Presente Interativa
-        function abrirPresente() {
-            document.getElementById('gift-closed').style.display = 'none';
-            document.getElementById('gift-text-prompt').style.display = 'none';
-            document.getElementById('gift-opened').style.display = 'block';
-        }
-
-        function entrarNoSite() {
-            const overlay = document.getElementById('gift-overlay');
-            overlay.style.opacity = '0';
-            
-            // Ativa o sinal de autoplay ao trocar de tela aproveitando o clique
+        // JS: remove inline handlers, improve accessibility and fix autoplay URL handling
+        (function () {
+            const giftClosedBtn = document.getElementById('gift-closed');
+            const giftTextPrompt = document.getElementById('gift-text-prompt');
+            const giftOpened = document.getElementById('gift-opened');
+            const giftOverlay = document.getElementById('gift-overlay');
+            const enterBtn = document.querySelector('.btn-open-site');
+            const mainContent = document.getElementById('main-content');
             const spotifyIframe = document.getElementById('spotify-audio');
-            spotifyIframe.src += "?autoplay=1";
-            
-            setTimeout(() => {
-                overlay.style.visibility = 'hidden';
-            }, 800);
-        }
 
-        // Sistema de Corações Flutuantes Bem Sutis
-        function createHeart() {
-            const container = document.getElementById('hearts-container');
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            
-            const size = Math.random() * 8 + 10;
-            heart.style.fontSize = size + 'px';
-            
-            heart.style.animationDuration = (Math.random() * 4 + 6) + 's';
-            
-            container.appendChild(heart);
-            
-            setTimeout(() => {
-                heart.remove();
-            }, 8000);
-        }
+            function openGift() {
+                giftClosedBtn.style.display = 'none';
+                giftTextPrompt.style.display = 'none';
+                giftOpened.style.display = 'block';
+                giftOpened.setAttribute('aria-hidden', 'false');
+                // move focus to the enter button for keyboard users
+                enterBtn.focus();
+            }
 
-        setInterval(createHeart, 3500);
+            function enterSite() {
+                // animate out the overlay
+                giftOverlay.style.opacity = '0';
+                giftOverlay.style.pointerEvents = 'none';
+                // set aria-hidden on overlay and main content for screen readers
+                giftOverlay.setAttribute('aria-hidden', 'true');
+                mainContent.setAttribute('aria-hidden', 'false');
+
+                // Safely add autoplay=1 to the iframe src using URL API
+                try {
+                    const url = new URL(spotifyIframe.src);
+                    url.searchParams.set('autoplay', '1');
+                    spotifyIframe.src = url.toString();
+                } catch (e) {
+                    // fallback: add param with correct delimiter
+                    if (!spotifyIframe.src.includes('autoplay')) {
+                        spotifyIframe.src += (spotifyIframe.src.includes('?') ? '&' : '?') + 'autoplay=1';
+                    }
+                }
+
+                setTimeout(() => {
+                    giftOverlay.style.visibility = 'hidden';
+                }, 800);
+
+                // return focus to main content start for users
+                setTimeout(() => {
+                    mainContent.querySelector('h2, h3, a, button, img')?.focus?.();
+                }, 900);
+            }
+
+            giftClosedBtn.addEventListener('click', openGift);
+            enterBtn.addEventListener('click', enterSite);
+
+            // keyboard accessibility: allow Enter/Space on gift button (native for button) and ESC to close overlay
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    // if overlay visible, hide it
+                    if (getComputedStyle(giftOverlay).visibility !== 'hidden' && getComputedStyle(giftOverlay).opacity !== '0') {
+                        giftOverlay.style.opacity = '0';
+                        giftOverlay.style.visibility = 'hidden';
+                        giftOverlay.setAttribute('aria-hidden', 'true');
+                        mainContent.setAttribute('aria-hidden', 'false');
+                        spotifyIframe.src = spotifyIframe.src; // no-op just to avoid linter warning
+                    }
+                }
+            });
+
+            // Hearts pool limiter and cleanup on animationend
+            const heartsContainer = document.getElementById('hearts-container');
+            let heartsCount = 0;
+            const maxHearts = 10;
+
+            function createHeart() {
+                if (heartsCount >= maxHearts) return;
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerText = '❤️';
+                heart.style.left = Math.random() * 90 + 'vw';
+                const size = Math.random() * 8 + 10;
+                heart.style.fontSize = size + 'px';
+                heart.style.animationDuration = (Math.random() * 4 + 6) + 's';
+
+                heartsContainer.appendChild(heart);
+                heartsCount++;
+
+                heart.addEventListener('animationend', () => {
+                    heart.remove();
+                    heartsCount = Math.max(0, heartsCount - 1);
+                }, { once: true });
+            }
+
+            // create hearts at a controlled rate
+            setInterval(createHeart, 1500);
+
+            // ensure focus is trapped minimally when overlay is open (simple trap)
+            function trapFocus(e) {
+                if (getComputedStyle(giftOverlay).visibility === 'hidden' || giftOverlay.getAttribute('aria-hidden') === 'true') return;
+                const focusable = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+                const nodes = giftOverlay.querySelectorAll(focusable);
+                if (nodes.length === 0) return;
+                const first = nodes[0];
+                const last = nodes[nodes.length - 1];
+                if (e.key === 'Tab') {
+                    if (e.shiftKey) { // shift + tab
+                        if (document.activeElement === first) {
+                            e.preventDefault();
+                            last.focus();
+                        }
+                    } else {
+                        if (document.activeElement === last) {
+                            e.preventDefault();
+                            first.focus();
+                        }
+                    }
+                }
+            }
+
+            document.addEventListener('keydown', trapFocus);
+
+            // Initial aria-hidden states
+            mainContent.setAttribute('aria-hidden', 'true');
+            giftOverlay.setAttribute('aria-hidden', 'false');
+
+        })();
     </script>
 </body>
 </html>
